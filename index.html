@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0c11">
+  <meta name="description" content="MEGURI 流動廣告車與品牌活動推廣方案。">
+  <title>MEGURI｜讓品牌出發</title>
+  <style>
+    :root { --pink:#f90089; --ink:#f6f6f8; --muted:#b3b4bf; --line:#30313d; --panel:#16171e; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; color-scheme:dark; }
+    body { margin:0; background:#0b0c11; color:var(--ink); font-family:Arial,"Noto Sans TC","Microsoft JhengHei",sans-serif; line-height:1.5; }
+    a { color:inherit; }
+    button,input,select,textarea { font:inherit; }
+    button,a,input,select,textarea { -webkit-tap-highlight-color:transparent; }
+    .shell { width:min(1240px,calc(100% - 80px)); margin:auto; }
+    .topbar { position:sticky; top:0; z-index:50; background:rgba(11,12,17,.95); backdrop-filter:blur(16px); border-bottom:1px solid var(--line); }
+    .nav { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .logo { position:relative; display:block; flex:none; width:166px; height:44px; overflow:hidden; background:#fff; border-radius:4px; text-decoration:none; }
+    .logo img { position:absolute; top:50%; left:50%; width:145%; max-width:none; height:auto; transform:translate(-50%,-50%); }
+    .nav-links { display:flex; gap:30px; align-items:center; }
+    .nav-links a { text-decoration:none; font-weight:600; font-size:.84rem; color:#c3c4cc; white-space:nowrap; transition:color .18s; }
+    .nav-links a:hover { color:#fff; }
+    .pill { display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:50px; border:1px solid transparent; border-radius:6px; background:var(--pink); color:#fff; padding:14px 23px; font-weight:700; font-size:.9rem; text-decoration:none; cursor:pointer; transition:background .18s,transform .18s; }
+    .pill:hover { background:#dc007b; transform:translateY(-2px); }
+    .nav-cta { min-height:42px; padding:10px 16px; font-size:.8rem; white-space:nowrap; }
+    h1,h2,h3,p { margin-top:0; }
+    h1,h2 { font-family:Arial,"Microsoft JhengHei",sans-serif; font-weight:900; letter-spacing:-.055em; }
+    h1 span,h2 span { color:var(--pink); }
+    .hero { padding:78px 0 64px; overflow:hidden; background:radial-gradient(ellipse at 50% 0,rgba(249,0,137,.075),transparent 64%); }
+    .hero-inner { display:grid; grid-template-columns:minmax(0,1fr); gap:44px; }
+    .hero-inner>div:first-child { text-align:center; }
+    .eyebrow { display:inline-block; color:#d5d5dd; font-size:.78rem; font-weight:700; letter-spacing:.2em; padding:0 0 13px; border-bottom:2px solid var(--pink); }
+    h1 { font-size:clamp(3.5rem,7.4vw,7rem); line-height:1.02; margin:25px 0 22px; }
+    h1 span { display:inline-block; }
+    h1 span br { display:none; }
+    .hero-zh { font-size:1.55rem; font-weight:700; letter-spacing:.12em; margin-bottom:12px; }
+    .hero-description { max-width:670px; margin:0 auto 27px; color:var(--muted); font-size:1rem; line-height:1.8; }
+    .hero-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
+    .pill-outline { background:transparent; color:#fff; border-color:#53535f; }
+    .pill-outline:hover { background:#24242f; }
+    .hero-media { min-width:0; overflow:hidden; padding:0; border-radius:12px; }
+    .hero-track { display:flex; width:100%; animation:hero-loop 30s linear infinite; }
+    .hero-media:hover .hero-track,.hero-media:focus-within .hero-track { animation-play-state:paused; }
+    .hero-slide-group { flex:none; width:100%; display:flex; gap:20px; padding-right:20px; }
+    .hero-slide { flex:none; width:calc((100% - 40px) / 3); margin:0; border-radius:10px; overflow:hidden; background:#fff; }
+    .hero-slide img { display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:contain; }
+    @keyframes hero-loop { to { transform:translateX(-100%); } }
+    section { scroll-margin-top:110px; }
+    .section { padding:72px 0; border-top:1px solid var(--line); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:48px; margin-bottom:34px; }
+    h2 { font-size:clamp(2.2rem,4vw,3.4rem); line-height:1.08; margin:0; }
+    .section-head p { max-width:390px; margin:0; color:var(--muted); font-size:.95rem; line-height:1.75; }
+    .benefits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .benefit { display:flex; align-items:start; gap:17px; padding:27px 24px; border:1px solid var(--line); border-radius:8px; background:var(--panel); transition:border-color .2s; }
+    .benefit:hover { border-color:#7e315b; }
+    .icon { display:grid; place-items:center; flex:none; width:42px; height:42px; background:rgba(249,0,137,.1); color:#ff55b2; border-radius:6px; font-size:1.45rem; }
+    .benefit strong,.usecase strong { display:block; font-size:1.02rem; font-weight:700; }
+    .benefit small,.usecase small { display:block; margin-top:8px; color:var(--muted); line-height:1.6; }
+    .formats { position:relative; }
+    .formats .section-head { padding-right:112px; }
+    .format-controls { position:absolute; right:0; top:78px; display:flex; gap:8px; }
+    .slider-button { width:44px; height:44px; display:grid; place-items:center; border:1px solid #53535f; border-radius:50%; background:transparent; color:#fff; cursor:pointer; transition:background .18s,border-color .18s; }
+    .slider-button svg { width:20px; height:20px; }
+    .slider-button:hover:not(:disabled) { background:var(--pink); border-color:var(--pink); }
+    .slider-button:disabled { opacity:.3; cursor:default; }
+    .format-grid { display:flex; gap:22px; overflow-x:auto; padding:4px 0 22px; scroll-snap-type:x mandatory; scroll-padding-inline:0; overscroll-behavior-x:contain; scrollbar-width:thin; scrollbar-color:var(--pink) #252631; }
+    .format-grid::-webkit-scrollbar { height:5px; }
+    .format-grid::-webkit-scrollbar-thumb { background:var(--pink); border-radius:10px; }
+    .format-grid::-webkit-scrollbar-track { background:#252631; }
+    .format-card { flex:0 0 calc((100% - 44px) / 3); min-width:0; scroll-snap-align:start; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--panel); transition:border-color .2s; }
+    .format-card:hover { border-color:#7e315b; }
+    .format-card img { display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:contain; background:#fff; }
+    .format-copy { padding:23px 22px 25px; }
+    .format-copy h3 { margin:0 0 11px; font-size:1.1rem; line-height:1.4; letter-spacing:-.02em; }
+    .format-copy p { color:var(--muted); font-size:.9rem; line-height:1.7; margin:0 0 20px; }
+    .tag { display:inline-block; padding:5px 9px; margin:2px 5px 0 0; border:1px solid #58324a; border-radius:4px; background:rgba(249,0,137,.06); color:#ff88c9; font-size:.68rem; font-weight:600; }
+    .usecase-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line); }
+    .usecase { display:flex; gap:12px; align-items:center; padding:26px 17px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .usecase strong { font-size:.88rem; }
+    .usecase small { font-size:.78rem; margin-top:4px; }
+    .usecase .icon { width:32px; height:32px; background:transparent; font-size:1.4rem; }
+    .enquiry { padding:86px 0; border-top:1px solid var(--line); background:#111219; }
+    .enquiry-inner { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:65px; align-items:start; }
+    .enquiry-copy { position:sticky; top:132px; }
+    .enquiry-copy h2 { line-height:1.18; }
+    .enquiry-copy p { color:var(--muted); line-height:1.85; margin:24px 0 0; max-width:350px; }
+    .form-card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:34px; }
+    .fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:21px 18px; }
+    label { display:block; font-size:.8rem; font-weight:600; margin:0 0 9px; color:#e4e4ea; }
+    label .required { color:#ff74c1; }
+    input,select,textarea { width:100%; min-width:0; min-height:46px; padding:12px; border:1px solid #40414e; border-radius:5px; color:#f6f6f8; background:#101117; outline:none; font-size:.88rem; }
+    input::placeholder,textarea::placeholder { color:#8d8f9e; opacity:1; }
+    input:focus,select:focus,textarea:focus { border-color:#ff55b2; box-shadow:0 0 0 2px rgba(249,0,137,.12); }
+    textarea { resize:vertical; min-height:112px; }
+    .full { grid-column:1/-1; }
+    .submit { width:100%; margin-top:25px; }
+    .form-status { min-height:1.4em; color:#ff88c9; font-size:.88rem; margin:13px 0 0; }
+    footer { border-top:1px solid var(--line); background:#0b0c11; padding:38px 0 45px; }
+    .footer-inner { display:grid; grid-template-columns:190px minmax(0,1fr) 255px; gap:35px; align-items:center; }
+    .footer-brand p { color:var(--muted); margin:12px 0 0; font-size:.67rem; white-space:nowrap; }
+    .footer-contacts { display:flex; justify-content:center; flex-wrap:wrap; gap:24px; }
+    .footer-contact { display:flex; align-items:center; gap:10px; text-decoration:none; font-size:.8rem; line-height:1.4; }
+    .footer-contact strong,.footer-contact small { display:block; }
+    .footer-contact small { margin-top:3px; color:var(--muted); font-size:.76rem; }
+    .footer-icon { display:grid; place-items:center; width:39px; height:39px; flex:none; border:1px solid #48404a; border-radius:50%; color:#ff55b2; background:transparent; transition:background .18s,color .18s; }
+    .footer-icon svg { width:21px; height:21px; }
+    .footer-contact:hover .footer-icon { color:#fff; background:var(--pink); border-color:var(--pink); }
+    .footer-disclaimer { color:#9b9da9; font-size:.69rem; line-height:1.75; border-left:1px solid var(--line); padding-left:25px; margin:0; }
+    .whatsapp-float { position:fixed; right:24px; bottom:calc(24px + env(safe-area-inset-bottom)); z-index:60; width:58px; height:58px; display:grid; place-items:center; background:#25d366; color:#fff; border:2px solid #fff; border-radius:50%; box-shadow:0 8px 25px #0005; transition:transform .18s; }
+    .whatsapp-float svg { width:33px; height:33px; }
+    .whatsapp-float:hover { transform:translateY(-3px); }
+    :focus-visible { outline:3px solid #ff74c1; outline-offset:4px; }
+    @media(max-width:1000px) {
+      .shell { width:calc(100% - 48px); }
+      .nav-links { gap:16px; }
+      .nav-links a { font-size:.74rem; }
+      .enquiry-inner { grid-template-columns:1fr; gap:32px; }
+      .enquiry-copy { position:static; }
+      .enquiry-copy p { max-width:600px; }
+      .footer-inner { grid-template-columns:180px 1fr; gap:28px; }
+      .footer-disclaimer { grid-column:1/-1; border-left:0; padding:22px 0 0; border-top:1px solid var(--line); }
+      .footer-contacts { justify-content:flex-end; }
+      .usecase-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .format-card { flex-basis:calc((100% - 22px) / 2); }
+      .benefit { padding:22px 16px; gap:12px; }
+    }
+    @media(max-width:700px) {
+      .shell { width:calc(100% - 32px); }
+      .nav { min-height:72px; gap:12px; }
+      .logo { width:135px; height:38px; }
+      .nav-links { display:none; }
+      .nav-cta { font-size:.68rem; padding:9px 11px; min-height:38px; }
+      .hero { padding:52px 0 44px; }
+      .hero-inner { gap:30px; }
+      .eyebrow { font-size:.6rem; letter-spacing:.12em; }
+      h1 { font-size:clamp(2.35rem,9.2vw,4rem); letter-spacing:-.06em; margin:22px 0 18px; }
+      .hero-zh { font-size:1.2rem; }
+      .hero-description { font-size:.9rem; }
+      .hero-actions { flex-direction:column; align-items:stretch; }
+      .hero-actions .pill { font-size:.8rem; padding:13px 12px; }
+      .hero-slide-group { gap:10px; padding-right:10px; }
+      .hero-slide { width:calc((100% - 20px) / 3); border-radius:5px; }
+      .section { padding:46px 0; }
+      h2 { font-size:2.1rem; }
+      .section-head { display:block; margin-bottom:26px; }
+      .section-head p { margin-top:16px; font-size:.88rem; }
+      .benefits { grid-template-columns:1fr; gap:12px; }
+      .benefit { padding:22px; }
+      .formats .section-head { padding-right:0; }
+      .format-controls { position:static; justify-content:flex-end; margin:-6px 0 18px; }
+      .slider-button { width:40px; height:40px; }
+      .format-grid { gap:16px; }
+      .format-card { flex-basis:87%; }
+      .format-copy { padding:21px; }
+      .usecase { padding:20px 10px; gap:5px; align-items:start; }
+      .usecase strong { font-size:.77rem; }
+      .usecase small { font-size:.7rem; }
+      .usecase .icon { width:26px; height:26px; font-size:1.2rem; }
+      .enquiry { padding:50px 0; }
+      .form-card { padding:23px 20px; }
+      .fields { grid-template-columns:1fr; gap:18px; }
+      .footer-inner { grid-template-columns:1fr; gap:25px; }
+      .footer-contacts { justify-content:flex-start; gap:25px; }
+      .footer-disclaimer { padding-top:20px; }
+      footer { padding-bottom:90px; }
+      .whatsapp-float { right:16px; bottom:calc(16px + env(safe-area-inset-bottom)); width:54px; height:54px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior:auto; }
+      *,*::before,*::after { transition:none !important; }
+      .hero-track { animation:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav shell" aria-label="主選單">
+      <a href="#top" class="logo" aria-label="MEGURI 首頁"><img src="images/meguri-logo.jpeg" alt="MEGURI" width="1600" height="1600"></a>
+      <div class="nav-links">
+        <a href="#about">What We Do</a><a href="#formats">Our Formats</a><a href="#uses">Use Cases</a><a href="#enquiry">Enquiry</a>
+      </div>
+      <a class="pill nav-cta" href="#enquiry">Start Your Enquiry →</a>
+    </nav>
+  </header>
+  <main id="top">
+    <div class="hero">
+      <div class="hero-inner shell">
+        <div>
+          <div class="eyebrow">MEGURI · VEHICLE ADVERTISING</div>
+          <h1>BRING YOUR<br><span>BRAND <br>OUTSIDE</span></h1>
+          <p class="hero-zh">讓品牌出發</p>
+          <p class="hero-description">讓品牌走進城市，以流動廣告車連結受眾，創造更貼近人群的宣傳體驗。</p>
+          <div class="hero-actions">
+            <a class="pill" href="#enquiry">Start Your Enquiry by e-Form →</a>
+            <a class="pill pill-outline" href="https://wa.me/85284825340?text=%E4%BD%A0%E5%A5%BD%20MEGURI%EF%BC%81%E6%88%91%E6%83%B3%E6%9F%A5%E8%A9%A2%E6%B5%81%E5%8B%95%E5%BB%A3%E5%91%8A%E8%BB%8A%E6%9C%8D%E5%8B%99%E3%80%82" target="_blank" rel="noopener noreferrer">Start Your Enquiry by WhatsApp ↗</a>
+          </div>
+        </div>
+        <div class="hero-media" aria-label="MEGURI 品牌活動圖片，自動循環播放">
+          <div class="hero-track">
+            <div class="hero-slide-group">
+              <figure class="hero-slide"><img src="images/hero-1.jpg" alt="MEGURI 街頭廣告車活動"></figure>
+              <figure class="hero-slide"><img src="images/hero-2.jpg" alt="MEGURI 活動策劃流程"></figure>
+              <figure class="hero-slide"><img src="images/hero-3.jpg" alt="MEGURI 流動媒體推廣介紹"></figure>
+            </div>
+            <div class="hero-slide-group" aria-hidden="true">
+              <figure class="hero-slide"><img src="images/hero-1.jpg" alt=""></figure>
+              <figure class="hero-slide"><img src="images/hero-2.jpg" alt=""></figure>
+              <figure class="hero-slide"><img src="images/hero-3.jpg" alt=""></figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section id="about" class="section shell">
+      <div class="section-head"><h2>WHAT <span>WE DO</span></h2><p>From visibility to activation and experience, MEGURI brings your brand into the city.</p></div>
+      <div class="benefits">
+        <div class="benefit"><span class="icon" aria-hidden="true">◉</span><div><strong>Visibility｜曝光</strong><small>走進人流較多的地點，讓更多人看見品牌。</small></div></div>
+        <div class="benefit"><span class="icon" aria-hidden="true">ϟ</span><div><strong>Activation｜啟動</strong><small>將推廣帶到現場，與顧客直接互動。</small></div></div>
+        <div class="benefit"><span class="icon" aria-hidden="true">✦</span><div><strong>Experience｜體驗</strong><small>設計值得記住的流動品牌體驗。</small></div></div>
+      </div>
+    </section>
+    <section id="formats" class="section formats shell">
+      <div class="section-head"><h2>CHOOSE YOUR <span>FORMAT</span></h2><p>不同形式，配合不同目標，讓品牌走進更多場景。</p></div>
+      <div class="format-controls">
+        <button class="slider-button" type="button" data-direction="-1" aria-label="上一款服務" aria-controls="format-slider"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="slider-button" type="button" data-direction="1" aria-label="下一款服務" aria-controls="format-slider"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m10 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="format-grid" id="format-slider" tabindex="0" role="region" aria-label="七款服務，向左右滑動瀏覽">
+        <article class="format-card"><img src="images/moving-showroom.jpg" alt="Moving Showroom 流動展廳" loading="lazy"><div class="format-copy"><h3>Moving Showroom｜流動展廳</h3><p>以可進入的車廂展示產品，打造近距離品牌體驗。</p><span class="tag">Experience</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/display-truck.jpg" alt="Display Truck 展示廣告車" loading="lazy"><div class="format-copy"><h3>Display Truck｜展示廣告車</h3><p>在城市街頭展示品牌、裝置及活動內容。</p><span class="tag">Visibility</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/small-truck.jpg" alt="Small Truck 小型流動廣告車" loading="lazy"><div class="format-copy"><h3>Small Truck｜小型流動廣告車</h3><p>靈活穿梭不同地區，適合品牌曝光與推廣。</p><span class="tag">Visibility</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/volkswagen-t2.jpg" alt="Volkswagen T2 復古廣告車" loading="lazy"><div class="format-copy"><h3>Volkswagen T2｜復古廣告車</h3><p>以搶眼復古造型，營造具話題性的活動場景。</p><span class="tag">Experience</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/ice-cream-truck.jpg" alt="Ice Cream Truck 雪糕車" loading="lazy"><div class="format-copy"><h3>Ice Cream Truck｜雪糕車</h3><p>將品牌與派發、試食及街頭互動結合。</p><span class="tag">Experience</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/tram-parade.jpg" alt="Tram Parade 電車巡遊" loading="lazy"><div class="format-copy"><h3>Tram Parade｜電車巡遊</h3><p>以電車巡遊形式，打造城市中的品牌體驗與互動。</p><span class="tag">Experience</span><span class="tag">Activation</span></div></article>
+        <article class="format-card"><img src="images/crystal-bus.jpg" alt="Crystal Bus 水晶巴士" loading="lazy"><div class="format-copy"><h3>Crystal Bus｜水晶巴士</h3><p>以水晶巴士呈現品牌活動，連結乘客與城市場景。</p><span class="tag">Experience</span><span class="tag">Activation</span></div></article>
+      </div>
+    </section>
+    <section id="uses" class="section shell">
+      <div class="section-head"><h2>BEST FOR / <span>USE CASES</span></h2><p>靈活應用，適合不同品牌目標與推廣場景。</p></div>
+      <div class="usecase-grid">
+        <div class="usecase"><span class="icon" aria-hidden="true">⬡</span><div><strong>Product display</strong><small>產品展示</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">▣</span><div><strong>Sampling</strong><small>產品試用／派發</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">☷</span><div><strong>Consultation / Demo</strong><small>諮詢／產品示範</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">↗</span><div><strong>Launch</strong><small>新品發佈</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">⌁</span><div><strong>Roadshow</strong><small>巡迴推廣</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">▥</span><div><strong>Lead generation</strong><small>潛在客戶收集</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">✎</span><div><strong>Registration</strong><small>登記／會員招募</small></div></div>
+        <div class="usecase"><span class="icon" aria-hidden="true">◎</span><div><strong>On-site activation</strong><small>內容製作／現場互動</small></div></div>
+      </div>
+    </section>
+    <section id="enquiry" class="enquiry">
+      <div class="enquiry-inner shell">
+        <div class="enquiry-copy"><h2>TELL US ABOUT<br><span>YOUR CAMPAIGN</span></h2><p>分享你的活動目標與需要，我們會協助你選擇合適的廣告車形式。</p></div>
+        <div class="form-card">
+          <!-- Formspree endpoint configured; change this action URL if you create a different form. -->
+          <form id="enquiry-form" action="https://formspree.io/f/xljdzznv" method="POST">
+            <input type="hidden" name="_subject" value="MEGURI 網站新查詢">
+            <div class="fields">
+              <div><label for="name">Name <span class="required">*</span></label><input id="name" name="name" autocomplete="name" required placeholder="Your name"></div>
+              <div><label for="company">Company <span class="required">*</span></label><input id="company" name="company" autocomplete="organization" required placeholder="Company name"></div>
+              <div><label for="email">Email <span class="required">*</span></label><input id="email" name="email" type="email" autocomplete="email" required placeholder="Your email address"></div>
+              <div><label for="contact">Phone / WhatsApp <span class="required">*</span></label><input id="contact" name="contact" type="tel" autocomplete="tel" required placeholder="Your contact number"></div>
+              <div><label for="format">Preferred format</label><select id="format" name="preferred_format"><option value="">Please select</option><option>Moving Showroom</option><option>Display Truck</option><option>Small Truck</option><option>Volkswagen T2</option><option>Ice Cream Truck</option><option>Tram Parade</option><option>Crystal Bus</option><option>Not sure yet</option></select></div>
+              <div><label for="objective">Campaign objective</label><select id="objective" name="campaign_objective"><option value="">Please select</option><option>Brand visibility</option><option>Sampling</option><option>Product display</option><option>Roadshow</option><option>Launch</option><option>Other</option></select></div>
+              <div><label for="location">District / location</label><input id="location" name="location" placeholder="e.g. Hong Kong Island, Kowloon"></div>
+              <div><label for="days">Expected days</label><select id="days" name="expected_days"><option value="">Please select</option><option>1 day</option><option>2–3 days</option><option>4–7 days</option><option>More than 1 week</option><option>Not sure yet</option></select></div>
+              <div><label for="budget">Budget range (HKD)</label><select id="budget" name="budget_range"><option value="">Please select</option><option>Under 50,000</option><option>50,000–100,000</option><option>100,000–200,000</option><option>Over 200,000</option><option>To be discussed</option></select></div>
+              <div><label for="date">Preferred date</label><input id="date" name="preferred_date" type="date"></div>
+              <div class="full"><label for="notes">Additional notes</label><textarea id="notes" name="additional_notes" placeholder="Tell us more about your campaign..."></textarea></div>
+            </div>
+            <button class="pill submit" type="submit">Submit Enquiry →</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-inner shell">
+      <div class="footer-brand"><a href="#top" class="logo" aria-label="MEGURI 首頁"><img src="images/meguri-logo.jpeg" alt="MEGURI" width="1600" height="1600" loading="lazy"></a><p>Visibility · Activation · Experience</p></div>
+      <div class="footer-contacts">
+        <a class="footer-contact" href="https://www.instagram.com/meguri.ad/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @meguri.ad">
+          <span class="footer-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+          <span><strong>Instagram</strong><small>@meguri.ad</small></span>
+        </a>
+        <a class="footer-contact" href="https://wa.me/85284825340?text=%E4%BD%A0%E5%A5%BD%20MEGURI%EF%BC%81%E6%88%91%E6%83%B3%E6%9F%A5%E8%A9%A2%E6%B5%81%E5%8B%95%E5%BB%A3%E5%91%8A%E8%BB%8A%E6%9C%8D%E5%8B%99%E3%80%82" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp 聯絡 MEGURI：+852 8482 5340">
+          <span class="footer-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.2 10.5c-.5 0-1.2.7-1.2 1.9 0 3.3 4.2 7.6 7.7 8.7 1.2.4 2.7.5 3.7-.2.6-.4 1-1.2.9-1.6-.1-.2-2.1-1.1-2.4-1.1-.3 0-.5.4-1 .9-.3.3-.6.4-1 .2-1.3-.6-2.5-1.6-3.4-2.8-.3-.4 0-.7.3-1 .3-.3.6-.6.4-1-.2-.5-1.1-2.4-1.4-2.9-.1-.3-.3-.4-.6-.4Z" fill="currentColor"/></svg></span>
+          <span><strong>WhatsApp</strong><small>+852 8482 5340</small></span>
+        </a>
+      </div>
+      <p class="footer-disclaimer">Actual vehicle design and display format may vary depending on vehicle model, dimensions and campaign requirements.</p>
+    </div>
+  </footer>
+  <a class="whatsapp-float" href="https://wa.me/85284825340?text=%E4%BD%A0%E5%A5%BD%20MEGURI%EF%BC%81%E6%88%91%E6%83%B3%E6%9F%A5%E8%A9%A2%E6%B5%81%E5%8B%95%E5%BB%A3%E5%91%8A%E8%BB%8A%E6%9C%8D%E5%8B%99%E3%80%82" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp 聯絡 MEGURI" title="WhatsApp 聯絡 MEGURI">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M11.2 10.5c-.5 0-1.2.7-1.2 1.9 0 3.3 4.2 7.6 7.7 8.7 1.2.4 2.7.5 3.7-.2.6-.4 1-1.2.9-1.6-.1-.2-2.1-1.1-2.4-1.1-.3 0-.5.4-1 .9-.3.3-.6.4-1 .2-1.3-.6-2.5-1.6-3.4-2.8-.3-.4 0-.7.3-1 .3-.3.6-.6.4-1-.2-.5-1.1-2.4-1.4-2.9-.1-.3-.3-.4-.6-.4Z" fill="currentColor"/></svg>
+  </a>
+  <script>
+    // Prevent a future copy with an unconfigured placeholder from submitting.
+    document.getElementById('enquiry-form').addEventListener('submit', function (event) {
+      if (this.getAttribute('action').split('/').pop().startsWith('YOUR_')) {
+        event.preventDefault();
+        document.getElementById('form-status').textContent = '查詢表格正在設定中，請先透過右下角 WhatsApp 聯絡我們。';
+      }
+    });
+    // Native touch scrolling, keyboard navigation and accessible arrow controls.
+    const slider = document.getElementById('format-slider');
+    const sliderButtons = document.querySelectorAll('.slider-button');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function moveSlider(direction) {
+      const card = slider.querySelector('.format-card');
+      const gap = parseFloat(getComputedStyle(slider).gap) || 0;
+      slider.scrollBy({left:direction * (card.getBoundingClientRect().width + gap), behavior:reducedMotion.matches ? 'auto' : 'smooth'});
+    }
+    function updateSliderControls() {
+      const maximum = slider.scrollWidth - slider.clientWidth;
+      sliderButtons[0].disabled = slider.scrollLeft <= 2;
+      sliderButtons[1].disabled = slider.scrollLeft >= maximum - 2;
+    }
+    sliderButtons.forEach(button => button.addEventListener('click', () => moveSlider(Number(button.dataset.direction))));
+    slider.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+        event.preventDefault();
+        moveSlider(event.key === 'ArrowRight' ? 1 : -1);
+      }
+    });
+    slider.addEventListener('scroll', updateSliderControls, {passive:true});
+    new ResizeObserver(updateSliderControls).observe(slider);
+    updateSliderControls();
+  </script>
+</body>
+</html>
